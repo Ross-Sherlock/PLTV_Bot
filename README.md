@@ -1,2 +1,2 @@
 # PLTV_Bot
- Scrapes premier league broacast rights - tweets results.
+ Scrapes premier league broadcast rights - tweets results.
