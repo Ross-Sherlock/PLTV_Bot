@@ -34,7 +34,9 @@ try:
     for elem in time_elements:
         time_list.append(elem.get_attribute('innerHTML'))
     for elem in broadcast_elements:
-        element = elem.get_attribute('innerHTML')
+        ## split at hyphen to return channel, return last element from resulting list
+        ## as broadcaster
+        element = elem.get_attribute('innerHTML').split("- ")[-1]
         broadcast_list.append(element)
 
     for elem in team_elements:
@@ -60,6 +62,7 @@ try:
     print(delta_days)
 
     if delta_days == 0:
+        ## add date just once as headline
         tweet_str = f"{upcoming_date}\n"
         for i in range(0, total_teams, 2):
             tweet_str += f"{time_list[i // 2]} {team_list[i]} vs {team_list[i + 1]} ({broadcast_list[i // 2]})"
