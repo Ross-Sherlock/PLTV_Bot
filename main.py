@@ -60,9 +60,9 @@ try:
     print(delta_days)
 
     if delta_days == 0:
+        tweet_str = f"{upcoming_date}\n"
         for i in range(0, total_teams, 2):
-            tweet_str = team_list[i] + " vs " + team_list[i + 1] + " - " + broadcast_list[i // 2] + " at " + \
-                        time_list[i // 2] + " On " + upcoming_date
+            tweet_str += f"{time_list[i // 2]} {team_list[i]} vs {team_list[i + 1]} ({broadcast_list[i // 2]})"
             print(tweet_str)
             create_tweet(tweet_str)
 
