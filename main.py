@@ -1,5 +1,5 @@
 from selenium.common.exceptions import TimeoutException
-from tweet import create_tweet
+import tweepy
 from datetime import date
 import datetime
 from selenium.webdriver.common.by import By
@@ -61,13 +61,26 @@ try:
     delta_days = (date_obj - today).days
     print(delta_days)
 
-    if delta_days == 0:
+    if delta_days == 1:
         ## add date just once as headline
-        tweet_str = f"{upcoming_date}\n"
+        tweet_str = f"{upcoming_date}"
         for i in range(0, total_teams, 2):
-            tweet_str += f"{time_list[i // 2]} {team_list[i]} vs {team_list[i + 1]} ({broadcast_list[i // 2]})"
-            print(tweet_str)
-            create_tweet(tweet_str)
+            tweet_str += f"\n{time_list[i // 2]} {team_list[i]} vs {team_list[i + 1]} ({broadcast_list[i // 2]})"
+
+        with open('prembotkeys.txt','r') as f:
+            keys=[]
+            for line in f:
+                line = line.split(": ")
+                keys.append(line[-1].rstrip())
+
+        CONSUMER_KEY = keys[0]
+        CONSUMER_SECRET = keys[1]
+        ACCESS_KEY = keys[2]
+        ACCESS_SECRET = keys[3]
+
+        client = tweepy.Client(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SECRET, access_token=ACCESS_KEY,access_token_secret=ACCESS_SECRET)
+
+        client.create_tweet(text=tweet_str)
 
 except TimeoutException:
     print("Timed out")
